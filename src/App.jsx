@@ -41,6 +41,10 @@ function App() {
     return <h2>User profile for id: {id}</h2>
   }
 
+  function PageNotFound(){
+    return <h1>404 - Page Not Found.....</h1>
+  }
+
   return (
     // <>
     <BrowserRouter>
@@ -97,6 +101,7 @@ function App() {
         About Us
         </Route>
         <Route path='/link' element={<LinkPage />}></Route>
+        <Route path='*' element={<PageNotFound />}> </Route>
       </Routes>
     </BrowserRouter>
 
