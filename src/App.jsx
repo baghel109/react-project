@@ -20,6 +20,7 @@ import { BrowserRouter, Routes, Route, Link, useParams } from "react-router-dom"
 import Home from './Home'
 import Contact from './Contact'
 import AboutUs from './AboutUs'
+import LinkPage from './LinkPage'
 
 function App() {
   const fruits = ["apple", "orange", "banana"];
@@ -30,6 +31,14 @@ function App() {
 
   function JustMessage() {
     alert("hit me just message");
+  }
+
+  function User(){
+    console.log(useParams())
+    const {id} = useParams()
+    console.log(id)
+
+    return <h2>User profile for id: {id}</h2>
   }
 
   return (
@@ -65,17 +74,20 @@ function App() {
 
       {/* <ApiCallTask /> */}
        <nav style={{display:'flex'}}>
-    <Link to="/home/hemant">Home |  </Link>
+    <Link to="/home/10">Home |  </Link>
     <br />
 
     <Link to="/contact"> Contact | </Link>
     <br />
 
-    <Link to="/about-us"> About Us </Link>
+    <Link to="/about-us"> About Us | </Link>
+    <a href="/link"> Link</a>
   </nav>
+
+
       <Routes>
         
-        <Route path="/home/:param" element={<Home />}>
+        <Route path="/home/:id" element={<Home />}>
           Home
         </Route>
         <Route path="/contact" element={<Contact />}>
@@ -84,6 +96,7 @@ function App() {
         <Route path='/about-us' element={<AboutUs />}>
         About Us
         </Route>
+        <Route path='/link' element={<LinkPage />}></Route>
       </Routes>
     </BrowserRouter>
 
