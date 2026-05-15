@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "./assets/vite.svg";
 import heroImg from "./assets/hero.png";
-import "./App.css";
+// import "./App.css";
 import Hello from "./Hello";
 import Bye from "./Bye";
 import Test from "./Test";
@@ -21,6 +21,11 @@ import Home from './Home'
 import Contact from './Contact'
 import AboutUs from './AboutUs'
 import LinkPage from './LinkPage'
+import ExponseForm from "./ExponseForm";
+import ExpenseList from "./ExpenseList";
+import ExpenseItem from "./ExpenseItem";
+
+
 
 function App() {
   const fruits = ["apple", "orange", "banana"];
@@ -44,6 +49,26 @@ function App() {
   function PageNotFound(){
     return <h1>404 - Page Not Found.....</h1>
   }
+
+  const [expenses, setExpenses]  = useState(()=> {
+    const saveData = localStorage.getItem("expenses")
+    return saveData ? JSON.parse(saveData) : []
+  })
+  
+  const addExpense =  (expense) => {
+      setExpenses((prev)=> [...prev, expense])
+  }
+
+  const deleteExpense = (id) => {
+    alert('hello')
+      setExpenses((prev)=> prev.filter((item)=> item.id != id))
+  }
+
+  useEffect(()=> {
+    localStorage.setItem("expenses", JSON.stringify(expenses))
+  },[expenses])
+
+  const totalExpense = expenses.reduce((sum, item)=> sum+ item.amount, 0)
 
   return (
     // <>
@@ -77,19 +102,22 @@ function App() {
       {/* <First /> */}
 
       {/* <ApiCallTask /> */}
-       <nav style={{display:'flex'}}>
-    <Link to="/home/10">Home |  </Link>
-    <br />
+      {/* <a href="/link"> Link</a> */}
 
-    <Link to="/contact"> Contact | </Link>
-    <br />
+      {/* <nav style={{display:'flex'}}>
+            <Link to="/home/10">Home |  </Link>
+            <br />
 
-    <Link to="/about-us"> About Us | </Link>
-    <a href="/link"> Link</a>
-  </nav>
+            <Link to="/contact"> Contact | </Link>
+            <br />
+
+            <Link to="/about-us"> About Us | </Link>
+          
+            <Link to='/link'>Link</Link>
+        </nav> */}
 
 
-      <Routes>
+      {/* <Routes>
         
         <Route path="/home/:id" element={<Home />}>
           Home
@@ -102,10 +130,17 @@ function App() {
         </Route>
         <Route path='/link' element={<LinkPage />}></Route>
         <Route path='*' element={<PageNotFound />}> </Route>
-      </Routes>
+      </Routes> */}
+
+
+      <ExponseForm onAddExpense={addExpense}/>
+      <br></br>
+      <h3 className="text-center">Total Expense: 💲{totalExpense.toFixed(2)}</h3>
+      <ExpenseList expenses = {expenses} onDelete={deleteExpense}/>
+
     </BrowserRouter>
 
-    // </>
+    // </>q
   );
 }
 
